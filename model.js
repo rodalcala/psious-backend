@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-  name: String,
-  todos: []
+const itemSchema = new mongoose.Schema({
+  owner: String,
+  text: String,
+  priority: Number,
+  completed: Boolean,
+  created_at: Date,
 });
 
-const User = mongoose.model('users', userSchema);
+const Item = mongoose.model('items', itemSchema);
 
-module.exports = User;
+module.exports = Item;
