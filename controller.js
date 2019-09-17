@@ -1,49 +1,42 @@
-const User = require('./model');
+const Item = require('./model');
 
 exports.getAll = async (ctx) => {
-  const allUsersData = await User.find({});
+  const allItems = await Item.find({});
 
-  console.log('allUsersData', allUsersData)
+  console.log('allItems', allItems)
 
   ctx.status = 200;
   ctx.body = {
     error_code: 0,
-    data: allUsersData,
+    message: allItems,
   };
 };
 
 exports.createToDo = async (ctx) => {
-  const {
-    text,
-    priority,
-  } = ctx.request.body;
+  const { text, priority } = ctx.request.body;
+  const { user } = ctx.params;
 
-  let { user } = ctx.params;
-
-  const item = {
+  Item.create({
+    owner: user,
     text,
     priority,
     completed: false,
-    createdAt: Date.now(),
-  }
+    created_at: Date.now(),
+  });
 
-  const existingUser = await User.findOne({ name: user });
-
-  if (!existingUser) {
-    User.create({
-      name: user,
-      todos: [ item ],
-    })
-  } else {
-    existingUser.todos.push(item);
-    User.findOneAndUpdate({ name: user }, { todos: [...existingUser.todos] }, err => {
-      if (err) console.log('Error creating a new item:', err);
-    })
-  }
+  ctx.status = 200;
+  ctx.body = {
+    error_code: 0,
+    message: 'item created',
+  };
 };
 
 exports.completeToDo = async (ctx, next) => {
+  let { user } = ctx.request.body;
+  let { createdAt } = ctx.params;
   
+  const existingUser = await Item.findOne({ name: user });
+
 };
 
 exports.deleteToDO = async (ctx, next) => {
