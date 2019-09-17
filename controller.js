@@ -29,14 +29,26 @@ exports.createToDo = async (ctx) => {
   };
 };
 
-exports.completeToDo = async (ctx, next) => {
-  let { user } = ctx.request.body;
-  let { createdAt } = ctx.params;
+exports.completeToDo = async (ctx) => {
+  const { id } = ctx.params;
   
-  const existingUser = await Item.findOne({ name: user });
+  await Item.findByIdAndUpdate(id, { completed: true });
 
+  ctx.status = 200;
+  ctx.body = {
+    error_code: 0,
+    message: 'item completed',
+  };
 };
 
-exports.deleteToDO = async (ctx, next) => {
-  
+exports.deleteToDO = async (ctx) => {
+  const { id } = ctx.params;
+
+  await Item.findByIdAndRemove(id);
+
+  ctx.status = 200;
+  ctx.body = {
+    error_code: 0,
+    message: 'item deleted',
+  };
 };
