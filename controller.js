@@ -3,8 +3,6 @@ const Item = require('./model');
 exports.getAll = async (ctx) => {
   const allItems = await Item.find({});
 
-  console.log('allItems', allItems)
-
   ctx.status = 200;
   ctx.body = {
     error_code: 0,
