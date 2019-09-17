@@ -1,0 +1,48 @@
+# Use version 3 of docker-compose (latest at time of writing)
+version: '3'
+
+# Define the services
+services:
+
+  # Set up the service for the server
+  server:
+    # Build the current directory
+    build: .
+    # Map all the files in the current directory to the working directory in the conteiner
+    # and ensure that node_modules aren't unnecessarily copied by creating the folder explicitly
+    volumes:
+      - ./:/app
+      - /app/node_modules/
+    # Set the container name
+    container_name: psious-server
+    # Let the server know that it depends on the database, so that it can connect
+    depends_on:
+      - mongo
+    # Connect to the psious-net network
+    networks:
+      - psious-net
+    # Define the ports on which the local machine will be able to access the server (local:container)
+    ports:
+      - "4000:4000"
+    # Make sure to keep restarting the server
+    restart: always
+
+  # Set up the mongoDB
+  mongo:
+    # Use the official mongo v3.4 image
+    image: mongo:3.4
+    # Set the container name
+    container_name: psious-db
+    # Connect to the psious-net network
+    networks:
+      - psious-net
+    # Expose the correct port for connections
+    ports:
+      - "27017:27017"
+    # Make sure to keep restarting the server if it fails
+    restart: always
+
+networks:
+
+  psious-net:
+    driver: bridge
