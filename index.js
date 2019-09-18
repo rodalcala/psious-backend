@@ -13,10 +13,13 @@ const connection = (socket) => {
   // eslint-disable-next-line no-console
   console.log(`A user with socket ${socket.id} has entered.`);
 
-  socket.on('userSubmited', async ({ user }) => {
+  const sendUsersItems = async ({ user }) => {
     const usersItems = await Item.find({ owner: user });
-    socket.emit('itemsList', { usersItems });
-  });
+    socket.emit('updateList', { usersItems });
+  };
+
+  /* NOTE: All events listed below will trigger an update of the to-do's list */
+  socket.on('userSubmited', sendUsersItems);
 };
 
 io.on('connection', connection);
