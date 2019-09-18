@@ -31,7 +31,7 @@ exports.createToDo = async (ctx) => {
 
 exports.completeToDo = async (ctx) => {
   const { id } = ctx.params;
-  
+
   await Item.findByIdAndUpdate(id, { completed: true });
 
   ctx.status = 200;
