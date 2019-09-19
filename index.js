@@ -19,7 +19,8 @@ const connection = (socket) => {
   };
 
   /* NOTE: All events listed below will trigger an update of the to-do's list */
-  socket.on('userSubmited', sendUsersItems);
+  socket.on('userSubmitted', sendUsersItems);
+  socket.on('itemSubmitted', sendUsersItems);
 };
 
 io.on('connection', connection);
