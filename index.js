@@ -15,12 +15,18 @@ const connection = (socket) => {
 
   const sendUsersItems = async ({ user }) => {
     const usersItems = await Item.find({ owner: user });
-    socket.emit('updateList', { usersItems });
+    io.in(user).emit('updateList', { usersItems });
   };
+  const joinRoomAndUpdateItems = async ({ user }) => {
+    socket.join(user);
+    const usersItems = await Item.find({ owner: user });
+    io.in(user).emit('updateList', { usersItems });
+  };
+
 
   /* NOTE: All events listed below will trigger an update of the to-do's list */
   socket.on('updateRequired', sendUsersItems);
-  socket.on('userSubmitted', sendUsersItems);
+  socket.on('userSubmitted', joinRoomAndUpdateItems);
 };
 
 io.on('connection', connection);
