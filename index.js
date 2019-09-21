@@ -23,7 +23,6 @@ const connection = (socket) => {
     io.in(user).emit('updateList', { usersItems });
   };
 
-
   /* NOTE: All events listed below will trigger an update of the to-do's list */
   socket.on('updateRequired', sendUsersItems);
   socket.on('userSubmitted', joinRoomAndUpdateItems);
