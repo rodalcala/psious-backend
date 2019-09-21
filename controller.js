@@ -2,11 +2,20 @@ const Item = require('./model');
 
 exports.getAll = async (ctx) => {
   const allItems = await Item.find({});
+  const allItemsByUser = {};
+
+  allItems.forEach((item) => {
+    if (allItemsByUser[item.owner]) {
+      allItemsByUser[item.owner].push(item);
+    } else {
+      allItemsByUser[item.owner] = [item];
+    }
+  });
 
   ctx.status = 200;
   ctx.body = {
     error_code: 0,
-    message: allItems,
+    message: allItemsByUser,
   };
 };
 
