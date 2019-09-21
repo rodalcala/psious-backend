@@ -5,7 +5,7 @@ const port = 27017;
 const db = mongoose.connection;
 const url = `mongodb://psious-db:${port}/psious-db`;
 
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false });
 
 // Connect to the db
 db.on('error', console.error.bind(console, 'connection error:')); // eslint-disable-line
