@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "27c55c14-67cb-4a7b-b37a-a39461672b67",
+		"name": "psious",
+		"description": "Postman collection to test psious-backend coding assesment.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all tasks (by user)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/todos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a to-do item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"text\": \"Check the weather\",\n\t\"priority\": 2\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/post/:user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"post",
+						":user"
+					],
+					"variable": [
+						{
+							"key": "user",
+							"value": "rod"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complete a to-do item",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/complete/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"complete",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "5d80d05e7688e902631f4744"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a to-do item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/delete/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"delete",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "5d80d05e7688e902631f4744"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
