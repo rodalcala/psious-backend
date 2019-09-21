@@ -11,13 +11,12 @@ exports.getAll = async (ctx) => {
 };
 
 exports.createToDo = async (ctx) => {
-  const { text, priority } = ctx.request.body;
+  const { text } = ctx.request.body;
   const { user } = ctx.params;
 
   Item.create({
     owner: user,
     text,
-    priority,
     completed: false,
     created_at: Date.now(),
   });
